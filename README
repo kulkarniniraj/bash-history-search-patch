@@ -1,0 +1,45 @@
+Applicable to readline library available with bash-4.2 (readline-5.1)
+
+About:
+======
+	In normal Bash, up and down arrow keys are assigned to list out previous history commands. 
+We needed a feature where rather than listing all previous commands, these arrow keys should trigger 
+a search in history lines for part of command entered.
+Eg. $ls(up_arrow_key) should take us through list of history commands which contain "ls" as its sub-string
+
+	Bash have inbuilt functions history-search-backward and history-search-forward which does similar
+job but search is restricted to start of history line only (ie. commands starting with given sub-string).
+
+	This simple patch adds two new functionalities in Bash history-search-backward-new and 
+history-search-forward-new which eliminates this restriction.
+
+Installation:
+=============
+.Extract the bash source tar-ball(bash-4.2.tar.gz tested) 
+.Apply the patch to the directory
+	patch -p1 < bash_patch
+.Compile and install Bash using instructions given in bash README
+
+Key Configurations:
+===================
+Add following lines to .inputrc file located in home folder. Create the file if necessary.
+
+"\e[A": history-search-backward-new
+"\e[B": history-search-forward-new
+
+First line reassigns functionality to UP arrow key
+Second line reassigns functionality to DOWN arrow key
+(Search code for you own key in "read" bash command)
+
+Save the file and restart bash for changes to take effect
+
+Optional:
+=========
+Change the default shell in /etc/passwd file for the user to /usr/local/bin/bash to make 
+the modified shell as default shell
+
+Send Comments, Suggestions and Bugs at :
+========================================
+kulkarniniraj14@gmail.com
+
+Niraj Kulkarni
